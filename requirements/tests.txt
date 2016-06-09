@@ -1,0 +1,4 @@
+coverage>=4.0
+wheel>=0.21
+twine>=1.0
+setuptools>=0.9
