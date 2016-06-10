@@ -1,73 +1,29 @@
 from django.template.loader import render_to_string
 from django.core.exceptions import ValidationError
 
+from .chart_options import ChartOptions
 
-registered_charts = []
 
-
-def register(chart_name=None):
+class ChartMeta(type):
     """
-    Class decorator for registering a chart.
-    :param chart_name: A custom name, otherwise the class name is used
-    :return: func
+    Metaclass for Charts, automatically registers each subclass of ChartBase.
     """
-    def wrapper(cls):
-        name = cls.__name__ if wrapper._name is None else wrapper._name
-        registered_charts.append((name, cls))
-        return cls
+    do_not_register = [
+        'ChartBase'
+    ]
 
-    wrapper._name = chart_name
-    return wrapper
-
-
-class ChartOptions:
-    """
-    Similar to a Django Form class. Defines input fields that can be set by the
-    user in the chart admin.
-
-    ```
-    options = ChartOptions({'key': 123})
-    if options.is_valid():
-        do_stuff(options.data)
-    else:
-        oh_no(options.errors)
-    ```
-    """
-    def __init__(self, data):
-        self._data = data
-        self._cleaned_data = {}
-        self._validated = False
-        self.errors = None
-
-    @property
-    def data(self):
+    @staticmethod
+    def __new__(mcs, name, bases, attrs):
         """
-        Get access to the
-        :return:
+        Called for each defined subclass of ChartBase
         """
-        if self.is_valid():
-            return self._cleaned_data
-        return None
+        if name not in mcs.do_not_register:
+            pass
 
-    def validate(self):
-        """
-        Run validation against all the fields.
-        :return:
-        """
-        self._validated = True
-
-    def is_valid(self):
-        """
-        Test if the provided inputs are valid.
-        :return: boolean
-        """
-        if not self._validated:
-            self.validate()
-
-        return self.errors is None
+        return type(name, bases, attrs)
 
 
-class ChartBase:
+class ChartBase(metaclass=ChartMeta):
     """
     Abstract base class for charts.
     """
