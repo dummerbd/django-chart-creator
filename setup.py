@@ -7,9 +7,9 @@ from setuptools import setup, find_packages
 
 ###################################################################
 
-NAME = "django-chart-creator"
+NAME = "django-chartforge"
 PACKAGES = find_packages()
-META_PATH = os.path.join("chart_creator", "__init__.py")
+META_PATH = os.path.join("chartforge", "__init__.py")
 KEYWORDS = ["django", "charts", "manage", "highcharts", "create"]
 CLASSIFIERS = [
     "Development Status :: 5 - Production/Stable",

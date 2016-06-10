@@ -1,8 +1,8 @@
 __version__ = "0.0.0"
 
-__title__ = "chart_creator"
+__title__ = "chartforge"
 __description__ = ""
-__uri__ = "https://github.com/dummerbd/django-chart-creator"
+__uri__ = "https://github.com/featherweightweb/django-chartforge"
 
 __author__ = "Benjamin Dummer"
 __email__ = "ben@featherweightweb.com"

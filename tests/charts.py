@@ -1,4 +1,4 @@
-from chart_creator import charts
+from chartforge import charts
 
 
 @charts.register('custom_chart_name')
