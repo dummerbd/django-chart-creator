@@ -18,19 +18,19 @@ class ChartRegistry:
     def register(self, app_name, chart_name, chart_class):
         """
         Register a chart. This is called by the ChartMeta class for every
-        subclass of ChartBase.
+        subclass of DynamicChart.
 
         :param app_name: The django app name
         :param chart_name: The name of the chart class
         :param chart_class: The actual chart class
         """
-        from chartforge.charts import ChartBase
+        from chartforge.dynamic import DynamicChart
 
         key = '%s.%s' % (app_name, chart_name)
         if key in self.charts:
             raise ValueError('Duplicate chart registered: %s' % key)
 
-        assert issubclass(chart_class, ChartBase), 'Must be a subclass of ChartBase'
+        assert issubclass(chart_class, DynamicChart), 'Must be a subclass of DynamicChart'
 
         self.charts[key] = self._Entry(app_name, chart_name, chart_class)
 
@@ -58,7 +58,7 @@ def get_chart_classes():
     """
     Get a list of all installed charts.
 
-    :return: list(chartforge.charts.ChartBase)
+    :return: list(chartforge.charts.DynamicChart)
     """
     return [entry.chart_class for entry in charts_registry.charts.values()]
 
@@ -69,7 +69,7 @@ def get_chart_class(app_name, chart_name):
 
     :param app_name: Something like 'myproject.myapp'
     :param chart_name: Chart, like 'MyChart'
-    :return: chartforge.charts.ChartBase
+    :return: chartforge.charts.DynamicChart
     """
     key = _get_chart_import(app_name, chart_name)
     return charts_registry.charts[key].chart_class

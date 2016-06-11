@@ -1,4 +1,4 @@
-from chartforge.charts import chartforge
+from chartforge.dynamic import dynamic_chart
 from chartforge.registry import get_chart_class
 
 

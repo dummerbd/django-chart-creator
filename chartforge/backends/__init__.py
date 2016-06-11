@@ -1,5 +1,5 @@
 from .base import BackendBase, BackendManager
-from .chart_class import ChartClassBackend
+from .dynamic_chart import DynamicChartBackend
 from .chart_model import ChartModelBackend
 from .static_chart import StaticChartBackend
 
@@ -8,7 +8,7 @@ from .static_chart import StaticChartBackend
 __all__ = [
     'BackendBase',
     'BackendManager',
-    'ChartClassBackend',
+    'DynamicChartBackend',
     'ChartModelBackend',
     'StaticChartBackend'
 ]

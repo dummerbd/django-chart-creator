@@ -1,7 +1,7 @@
 from .base import BackendBase
 
 
-class ChartClassBackend(BackendBase):
+class DynamicChartBackend(BackendBase):
     """
 
     """

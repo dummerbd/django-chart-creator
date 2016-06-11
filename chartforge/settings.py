@@ -4,7 +4,7 @@ from django.conf import settings
 DEFAULTS = {
     'chart_apps': [],
     'backends': [
-        'chartforge.backends.ChartClassBackend',
+        'chartforge.backends.DynamicChartBackend',
         'chartforge.backends.ChartModelBackend',
         'chartforge.backends.StaticChartBackend'
     ]

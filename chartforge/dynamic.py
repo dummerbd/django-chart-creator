@@ -6,7 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 from chartforge.registry import charts_registry
 
 
-class ChartBase:
+class DynamicChart:
     """
     Abstract base class for charts. Subclasses are made automatically when used
     with the ``chartforge()` decorator.
@@ -105,24 +105,24 @@ class ChartBase:
         )
 
 
-def chartforge(name=None, template_name=None, template=None, verbose_name=None):
+def dynamic_chart(name=None, template_name=None, template=None, verbose_name=None):
     """
     A function or class decorator that registers a chart with the chartforge
     registry.
 
     Can be used on a function or class::
 
-        from chartforge import chartforge
+        from chartforge import dynamic_chart
 
-        @chartforge(
+        @dynamic_chart(
             name='MyCustomChart',
             template_name='example_chart.json',
             verbose_name='My Awesome Chart!')
         def my_chart(chart):
-            # chart is an instance of ChartBase
+            # chart is an instance of DynamicChart
             return {} # example data...
 
-        @chartforge()
+        @dynamic_chart()
         def ChartClass:
             template_name = 'another_chart.json'
 
@@ -139,10 +139,10 @@ def chartforge(name=None, template_name=None, template=None, verbose_name=None):
         _name = cls_or_func.__name__ if name is None else name
         app = cls_or_func.__module__
 
-        bases = (cls_or_func, ChartBase)
+        bases = (cls_or_func, DynamicChart)
         wrapped_func = None
         if type(cls_or_func) is not type:
-            bases = (ChartBase,)
+            bases = (DynamicChart,)
             wrapped_func = cls_or_func
 
         attrs = {
