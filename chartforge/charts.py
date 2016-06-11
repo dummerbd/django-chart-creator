@@ -20,6 +20,7 @@ class ChartBase:
     def __call__(self, **kwargs):
         """
         Simply calls ``get_template(**kwargs)``.
+
         :return: dict
         """
         return self.get_template(**kwargs)
@@ -29,6 +30,7 @@ class ChartBase:
         Override in subclasses to generate dynamic templates. By default, the
         ``template`` attribute is returned, otherwise the `template_name` is
         loaded.
+
         :return: dict
         """
         both_defined = self.template is not None and self.template_name is not None
@@ -49,6 +51,7 @@ class ChartBase:
         ``get_context_data()``. Chart templates can be more dynamic by using
         a chart template, but once a chart is created, the template is static.
         Use a custom ``get_data()`` method to add dynamic data sources.
+
         :return: dict
         """
         context = self.get_context_data(**kwargs)
@@ -59,6 +62,7 @@ class ChartBase:
         """
         Get context data for rendering a chart template. Useful for urls, dates,
         or any other dynamic data needed for a chart template.
+
         :param kwargs: Kwargs passed when creating this chart
         :return: dict
         """
@@ -68,6 +72,7 @@ class ChartBase:
         """
         Get data that is used when editing this report. Set to something cached
         or static. Calls ``get_data()`` by default.
+
         :param kwargs:
         :return:
         """

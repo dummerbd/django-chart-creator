@@ -38,6 +38,31 @@ class ChartRegistry:
 charts_registry = ChartRegistry()
 
 
+def _get_chart_import(app_name, chart_name):
+    """
+    Look up a chart for an app. Raises KeyError when no match found.
+
+    :param app_name: The app name
+    :param chart_name: The chart class or function (or name='' kwarg) name
+    :return: The matching key
+    """
+    key = '%s.%s' % (app_name, chart_name)
+    if key not in charts_registry.charts.keys():
+        key = '%s.charts.%s' % (app_name, chart_name)
+        if key not in charts_registry.charts.keys():
+            raise KeyError('No chart named %s.%s' % (app_name, chart_name))
+    return key
+
+
+def get_chart_classes():
+    """
+    Get a list of all installed charts.
+
+    :return: list(chartforge.charts.ChartBase)
+    """
+    return [entry.chart_class for entry in charts_registry.charts.values()]
+
+
 def get_chart_class(app_name, chart_name):
     """
     Get the chart class for a given name and app.

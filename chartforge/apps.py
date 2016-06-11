@@ -21,13 +21,27 @@ class ChartForgeConfig(AppConfig):
         Initialize the settings and import all of the charts modules in the
         chart_apps setting.
 
-        For every subclass of Chart, the ChartMeta class will call the
-        register() method on this singleton instance. This will make those
-        chart classes available in the admin.
+        Each entry in chart_apps should be a dot path to an app that has a
+        charts module, or dot path to a module containing charts::
+
+            CHARTFORGE = {
+                'chart_apps': {
+                    # path to app, project.my_app.charts will also be loaded
+                    'project.my_app',
+
+                    # path directly to a module
+                    'project.my_app.other_charts'
+                }
+            }
+
         """
         self.settings = ChartForgeSettings()
 
-        for charts in self.settings.installed_charts:
-            # This is enough to get the ChartMeta to register all the
-            # charts in this module.
-            import_module(charts)
+        for entry in self.settings.chart_apps:
+            # import entry, which should evaluate all the @chartforge() charts
+            import_module(entry)
+            try:
+                # Common convention is to use a 'charts' module
+                import_module('%s.charts' % entry)
+            except ImportError:
+                pass
