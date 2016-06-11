@@ -46,13 +46,20 @@ def get_chart_class(app_name, chart_name):
     :param chart_name: Chart, like 'MyChart'
     :return: chartforge.charts.ChartBase
     """
+    key = _get_chart_import(app_name, chart_name)
+    return charts_registry.charts[key].chart_class
 
-    # Prefer full paths, either ('project.app', 'charts.MyChart')
-    # Or ('project.app.charts', 'MyChart') will work.
-    key = '%s.%s' % (app_name, chart_name)
+
+def is_chart_class(app_name, chart_name):
+    """
+    Check if a chart class name exists.
+
+    :param app_name:
+    :param chart_name:
+    :return: bool
+    """
     try:
-        return charts_registry.charts[key].chart_class
+        _get_chart_import(app_name, chart_name)
+        return True
     except KeyError:
-        # Common convention is to place the charts in a module called charts
-        key = '%s.charts.%s' % (app_name, chart_name)
-        return charts_registry.charts[key].chart_class
+        return False

@@ -1,14 +1,18 @@
 from django.db import models
 from django.conf import settings
 
+from chartforge.fields import ChartClassField
+
 
 class ChartTemplate(models.Model):
     """
-    Keeps track of all the available templates. Templates include all
-    installed Chart classes, and any files in the charts template
-    directory if configured.
+    Lists all of the available chart templates. They come from various sources:
+     * a custom chart class
+     * an uploaded chart config
+     * a static chart file
     """
     name = models.CharField(max_length=100)
+    chart_class = ChartClassField()
     thumbnail = models.ImageField(upload_to='chartforge/tpl')
     example_data = models.TextField()
     chart_config = models.TextField()

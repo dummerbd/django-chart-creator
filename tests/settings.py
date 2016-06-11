@@ -5,8 +5,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Settings specific to chartforge:
 CHART_FORGE = {
-    'installed_charts': [
-        'tests.charts'
+    # list of all the apps containing charts
+    'chart_apps': [
+        'tests'
     ],
     'chart_templates': [
         os.path.join(BASE_DIR, 'tests/templates')

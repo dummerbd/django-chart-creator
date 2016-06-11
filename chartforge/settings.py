@@ -1,6 +1,16 @@
 from django.conf import settings
 
 
+DEFAULTS = {
+    'chart_apps': [],
+    'backends': [
+        'chartforge.backends.ChartClassBackend',
+        'chartforge.backends.ChartModelBackend',
+        'chartforge.backends.StaticChartBackend'
+    ]
+}
+
+
 class ChartForgeSettings:
     """
     Simply loads the CHART_FORGE settings dictionary and sets any defaults, as
@@ -11,6 +21,8 @@ class ChartForgeSettings:
 
         assert isinstance(org, dict), 'CHART_FORGE must be a dict'
 
-        self.installed_charts = org.get('installed_charts', [])
+        def _load(name):
+            return org[name] if name in org else DEFAULTS[name]
 
-        # TODO: add default settings
+        self.chart_apps = _load('chart_apps')
+        self.backends = _load('backends')
