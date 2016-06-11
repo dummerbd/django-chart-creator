@@ -1,6 +1,17 @@
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Settings specific to chartforge:
+CHART_FORGE = {
+    'installed_charts': [
+        'tests.charts'
+    ],
+    'chart_templates': [
+        os.path.join(BASE_DIR, 'tests/templates')
+    ]
+}
 
 SECRET_KEY = 'secret test key'
 
@@ -9,6 +20,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'chartforge',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
