@@ -1,5 +1,6 @@
 from importlib import import_module
 from chartforge.settings import ChartForgeSettings
+from chartforge.base import Chart, ChartTemplate, RenderType, ExportType
 
 
 class BackendBase:
@@ -19,7 +20,7 @@ class BackendBase:
         """
         Get a list of chart templates.
 
-        :return: list
+        :rtype: list[ChartTemplate]
         """
         return []
     get_chart_templates.disabled = True
@@ -28,7 +29,8 @@ class BackendBase:
         """
         Get a chart template by name.
 
-        :return: template
+        :param str full_name: The full name of the chart template
+        :rtype: list[ChartTemplate]
         """
         return None
     get_chart_template.disabled = True
@@ -37,7 +39,7 @@ class BackendBase:
         """
         Get a list of all available charts.
 
-        :return: list
+        :rtype: list[Chart]
         """
         return []
     get_charts.disabled = True
@@ -46,8 +48,8 @@ class BackendBase:
         """
         Get a specific chart by its slug.
 
-        :param slug: The chart's slug identifier
-        :return: chart
+        :param str slug: The chart's slug identifier
+        :rtype: Chart
         """
         return None
     get_chart.disabled = True
@@ -56,29 +58,29 @@ class BackendBase:
         """
         Save a chart instance to remote or local persistent storage.
 
-        :return: bool
+        :param Chart chart: The chart to save
         """
-        return False
+        pass
     save_chart.disabled = True
 
     def render_chart(self, chart, render_type=None):
         """
         Render a chart instance to a byte stream using the render type.
 
-        :param chart:
-        :param render_type:
-        :return: bytes[]
+        :param Chart chart: The chart to render
+        :param RenderType render_type: The render tpye
+        :rtype: list[bytes]
         """
         return None
     render_chart.disabled = True
 
     def export_chart(self, chart, export_type=None):
         """
-        Export a chart instance to a byte stream using the render type.
+        Export a chart instance to a byte stream using the export type.
 
-        :param chart:
-        :param export_type:
-        :return:
+        :param Chart chart: The chart to export
+        :param ExportType export_type: The export type
+        :rtype: list[bytes]
         """
         return None
     export_chart.disabled = True
@@ -87,6 +89,8 @@ class BackendBase:
 def load_backends_from_settings():
     """
     Load all of the entries in the backends setting.
+
+    :rtype: list[BackendBase]
     """
     settings = ChartForgeSettings()
     backends = []
